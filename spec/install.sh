@@ -2,7 +2,7 @@
 # ==========================================
 # ZTE-ModemFlow 一键部署脚本
 # 作者：https://github.com/Rabbit-Spec
-# 版本：1.0.7
+# 版本：1.0.8
 # 日期：2026.03.02
 # ==========================================
 
@@ -72,8 +72,7 @@ echo -e " ${YELLOW}1.${NC} 填入光猫 ${BLUE}IP${NC} 和 ${BLUE}密码${NC}"
 echo -e "    └─ 路径: ${BLUE}/config/shell/zte_monitor.sh${NC}"
 echo -e ""
 
-echo -e " ${YELLOW}2.${NC} 确保系统已安装 ${GREEN}HACS${NC} 商店"
-echo -e " 安装命令 wget -O - https://get.hacs.xyz | bash"
+echo -e " ${YELLOW}2.${NC} 确保系统已安装 ${GREEN}HACS${NC} 商店｜安装命令 wget -O - https://get.hacs.xyz | bash"
 echo -e ""
 
 echo -e " ${YELLOW}3.${NC} 在 HACS 中下载以下前端插件:"

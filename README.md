@@ -53,7 +53,7 @@ curl -sSL https://raw.githubusercontent.com/Rabbit-Spec/ZTE-ModemFlow/main/spec/
 > **注意**：脚本默认 Telnet 登录信息为 `root` / `Zte521`，如不同请自行修改。
 
 ### 2. 应用主题 (Themes)
-将 `themes/mushroom-glass.yaml` 放入 HA 的 `themes` 目录并启用该主题。
+在 HomeAssistant 用户界面中应用 Mushroom Glass 主题
 
 ### 3. 导入仪表盘 (Dashboards)
 新建仪表盘面板，将 `dashboards/dashboard.yaml` 内容粘贴至代码编辑器。

@@ -2,7 +2,7 @@
 # 配置包：ZTE-ModemFlow 一体化配置
 # 功能：集成指令、传感器、模板与自动化
 # 作者：https://github.com/Rabbit-Spec
-# 版本：1.0.0
+# 版本：1.0.1
 # ==========================================
 
 # 1. 定义底层脚本指令
@@ -12,13 +12,14 @@ shell_command:
   # 用于级联重启的光猫单独重启脚本
   reboot_modem_only: "bash /config/shell/reboot_modem.sh"
 
-# 2. 核心数据中心：读取脚本生成的 JSON 文件
+# 调用本地脚本抓取光猫数据
 command_line:
   - sensor:
       name: ZTE Modem Info
+      # 核心逻辑：读取脚本生成的 JSON 文件
       command: "cat /config/shell/zte_data.json"
       scan_interval: 30
-      # 智能判定：如果温度大于 0 则更新；否则保持原状，防止离线时数据跌零
+      # 智能判定：如果温度大于 0，则更新数据；如果为 0（代表光猫离线），则保持上一次的状态，防止曲线跌零
       value_template: >-
         {% if value_json.temp | float(0) > 0 %}
           {{ value_json.temp }}
@@ -27,7 +28,7 @@ command_line:
         {% endif %}
       unit_of_measurement: "°C"
       device_class: temperature
-      state_class: measurement
+      state_class: measurement  # 开启长期统计功能，数据不丢失
       json_attributes:
         - uptime
         - cpu
@@ -42,7 +43,7 @@ command_line:
         - eth_tx
         - ping
 
-# 3. 属性拆解实体：方便仪表盘调用与历史记录
+# 将主传感器的属性拆解为独立的实体，方便在大屏上画图监控
 template:
   - sensor:
       - name: "光猫 PON 接收包"
@@ -87,18 +88,19 @@ template:
         icon: mdi:pulse
         state_class: measurement
 
-      - name: "LAN口 接收包"
+      - name: "光猫 LAN 接收包"
         unit_of_measurement: "pkts"
         icon: mdi:lan-connect
         state_class: total_increasing
         state: "{{ state_attr('sensor.zte_modem_info', 'eth_rx') }}"
 
-      - name: "LAN口 发送包"
+      - name: "光猫 LAN 发送包"
         unit_of_measurement: "pkts"
         icon: mdi:lan-disconnect
         state_class: total_increasing
         state: "{{ state_attr('sensor.zte_modem_info', 'eth_tx') }}"
-
+        
+      # --- 新增的内存实体计算逻辑 ---
       - name: "光猫内存占用"
         unit_of_measurement: "%"
         icon: mdi:memory

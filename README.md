@@ -38,8 +38,8 @@
 ## 🧩 依赖插件 (HACS)
 
 在导入本项目配置前，请确保已在 **HACS 商店** 安装以下前端组件：
-1. **Mushroom Cards**：基础 UI 架构。
-2. **Mini Graph Card**：用于显示趋势曲线。
+1. **Lovelace Mushroom**：基础 UI 架构。
+2. **Mini-Graph-Card**：用于显示趋势曲线。
 3. **Card-mod**：核心视觉依赖，用于实现模糊效果。
 
 ## 🚀 安装与配置

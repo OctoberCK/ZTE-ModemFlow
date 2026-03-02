@@ -24,7 +24,8 @@
 
 ```text
 ├── conf/
-│   └── configuration.yaml    # 包含命令行传感器、模板传感器及数据库优化配置
+│   ├── configuration.yaml    # 包含命令行传感器、模板传感器及数据库优化配置
+│   └── automations.yaml     # 核心动力：定时触发脚本运行的自动化配置
 ├── dashboards/
 │   └── dashboard.yaml       # 基于 Mushroom 和 Mini-graph-card 的仪表盘代码
 ├── scripts/
@@ -51,9 +52,10 @@ chmod +x /config/shell/reboot_modem.sh
 ```
 > **注意**：脚本默认 Telnet 登录信息为 `root` / `Zte521`，如不同请自行修改。
 
-### 2. 配置光猫数据传感器 (Conf)
-将 `conf/configuration.yaml` 内容合并至你的 HA `configuration.yaml` 配置。
-
+### 2. 配置光猫数据传感器以及自动化 (Conf)
+1. 将 `conf/configuration.yaml` 内容合并至你的 HA `configuration.yaml` 配置。
+2. 将 `conf/automations.yaml` 内容合并至你的 HA `automations.yaml` 配置。
+3. 在 HA 自动化中启用 **每分钟同步光猫数据到文件** 自动化。
 脚本会生成 `zte_data.json` 文件由 `command_line` 传感器读取。
 
 ### 3. 应用主题 (Themes)

@@ -2,14 +2,14 @@
 # 卡片：中兴 ZX279133 光猫数据展示卡片
 # 功能：中兴光猫自动化数据采集与监控卡片。
 # 作者：https://github.com/Rabbit-Spec
-# 版本：1.0.1
+# 版本：1.0.2
 # ==========================================
 
 type: vertical-stack
 cards:
   - type: custom:mushroom-title-card
-    title: 光猫仪表盘  # 可自行修改标题
-    subtitle: G100P-17N3  # 可自行修改为你设备的型号
+    title: 光猫仪表盘（可自行修改标题）
+    subtitle: G100P-17N3（可自行修改为你设备的型号）
     card_mod:
       style: |
         ha-card {

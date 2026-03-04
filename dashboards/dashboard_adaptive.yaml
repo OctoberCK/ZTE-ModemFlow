@@ -1,0 +1,217 @@
+# ==========================================
+# 卡片：中兴 ZX279133 光猫数据展示卡片（Test）
+# 功能：自动化数据采集与监控
+# 作者：https://github.com/Rabbit-Spec
+# 版本：1.0.5
+# 日期：2026.03.04
+# ==========================================
+
+type: sidebar
+layout_type: custom:grid-layout
+title: 光猫仪表盘
+icon: mdi:dresser
+card_mod:
+  style: |
+    :host {
+      /* 强行透出主题背景，并给四周留出呼吸感边缘 */
+      padding: 16px !important; 
+      background: transparent !important; 
+    }
+layout:
+  grid-template-columns: 55% 45%
+  grid-gap: 24px
+  max-width: 1200px
+  margin: 0 auto
+  mediaquery:
+    "(max-width: 800px)":
+      grid-template-columns: 100%
+cards:
+  - type: vertical-stack
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: custom:mushroom-title-card
+            title: 光猫仪表盘
+            subtitle: G100P-17N3
+            alignment: center
+            card_mod:
+              style: |
+                ha-card {
+                  backdrop-filter: blur(24px) saturate(120%) !important;
+                  -webkit-backdrop-filter: blur(24px) saturate(120%) !important;
+                  background: var(--ha-card-background) !important;
+                  border: 1.5px solid var(--ha-card-border-color) !important;
+                  border-radius: 16px !important;
+                  box-shadow: var(--ha-card-box-shadow) !important;
+                  padding-top: 16px !important;
+                  padding-bottom: 16px !important;
+                }
+                .subtitle {
+                  color: var(--secondary-text-color) !important;
+                  font-weight: 500 !important;
+                }
+          - type: custom:mini-graph-card
+            height: 100
+            hours_to_show: 0.5
+            points_per_hour: 30
+            lower_bound: 30
+            upper_bound: 80
+            entities:
+              - entity: sensor.zte_modem_info
+                name: CPU 温度
+                color: "#ff3d00"
+                show_state: true
+              - entity: sensor.zte_modem_info
+                attribute: cpu
+                name: CPU 占用
+                color: "#00e5ff"
+                y_axis: secondary
+                show_state: true
+                unit: "%"
+            show:
+              labels: true
+              labels_secondary: true
+              fill: fade
+              legend: true
+            card_mod:
+              style: |
+                ha-card {
+                  color: var(--primary-text-color) !important;
+                  border-radius: 16px !important;
+                }
+  - type: vertical-stack
+    cards:
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: custom:mushroom-template-card
+            entity: sensor.guang_mao_pon_wu_li_cuo_wu
+            primary: "{{ states(entity) }} pkts"
+            secondary: PON 物理错误 (FEC)
+            icon: mdi:check-decagram
+            layout: vertical
+            tap_action:
+              action: more-info
+            color: green
+            features_position: bottom
+          - type: custom:mushroom-template-card
+            entity: sensor.guang_mao_lian_lu_yan_chi
+            primary: "{{ states(entity) }} ms"
+            secondary: 内网延迟
+            icon: mdi:access-point-network
+            layout: vertical
+            color: >-
+              {% if states(entity) | float(0) < 5 %} green  {% elif
+              states(entity) | float(0) < 20 %} yellow {% else %} red {% endif
+              %}
+            features_position: bottom
+      - type: grid
+        columns: 3
+        square: false
+        cards:
+          - type: custom:mushroom-entity-card
+            entity: sensor.guang_mao_cpu_fu_zai
+            name: CPU 负载
+            icon: mdi:cpu-64-bit
+            layout: vertical
+            icon_color: red
+          - type: custom:mushroom-entity-card
+            entity: sensor.zte_modem_info
+            name: CPU 温度
+            icon: mdi:thermometer
+            layout: vertical
+            icon_color: orange
+          - type: custom:mushroom-entity-card
+            entity: sensor.guang_mao_nei_cun_zhan_yong
+            name: RAM 占用
+            icon: mdi:memory
+            layout: vertical
+            icon_color: purple
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: custom:mushroom-template-card
+            entity: sensor.zte_modem_info
+            icon: mdi:timer-outline
+            layout: vertical
+            primary: >-
+              {% set uptime = state_attr(entity, 'uptime') | int(0) %} {{ uptime
+              // 86400 }} 天 {{ (uptime % 86400) // 3600 }} 时 {{ (uptime % 3600)
+              // 60 }} 分
+            secondary: 运行时间
+            color: teal
+            features_position: bottom
+          - type: custom:mushroom-template-card
+            primary: 重启光猫
+            secondary: 约 3 分钟恢复
+            icon: mdi:restart
+            layout: vertical
+            tap_action:
+              action: call-service
+              service: shell_command.reboot_modem_only
+              confirmation:
+                text: ⚠️ 确定要重启光猫吗？家里网络将会断开大约 3 分钟！
+            color: red
+            features_position: bottom
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: custom:mushroom-template-card
+            entity: sensor.guang_mao_pon_jie_shou_bao
+            icon: mdi:download-network-outline
+            layout: vertical
+            primary: "{{ states(entity) }}"
+            secondary: PON 接收包
+            features_position: bottom
+            color: cyan
+          - type: custom:mushroom-template-card
+            entity: sensor.guang_mao_pon_fa_song_bao
+            icon: mdi:upload-network-outline
+            layout: vertical
+            primary: "{{ states(entity) }}"
+            secondary: PON 发送包
+            icon_color: deep-orange
+            features_position: bottom
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: custom:mushroom-template-card
+            entity: sensor.guang_mao_lan_jie_shou_bao
+            icon: mdi:import
+            layout: vertical
+            primary: "{{ states(entity) }}"
+            secondary: LAN 接收包
+            icon_color: blue
+            features_position: bottom
+          - type: custom:mushroom-template-card
+            entity: sensor.guang_mao_lan_fa_song_bao
+            icon: mdi:export
+            layout: vertical
+            primary: "{{ states(entity) }}"
+            secondary: LAN 发送包
+            icon_color: amber
+            features_position: bottom
+    view_layout:
+      position: sidebar
+background:
+  opacity: 33
+  alignment: center
+  size: cover
+  repeat: repeat
+  attachment: fixed
+  image:
+    media_content_id: media-source://image_upload/6dc8021fb95371090d4703b4dc43bcd3
+    media_content_type: image/png
+    metadata:
+      title: 图像2026-2-28 19.02.PNG
+      thumbnail: /api/image/serve/6dc8021fb95371090d4703b4dc43bcd3/256x256
+      media_class: image
+      children_media_class: null
+      navigateIds:
+        - {}
+        - media_content_type: app
+          media_content_id: media-source://image_upload

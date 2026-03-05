@@ -2,7 +2,7 @@
 # 卡片：中兴 ZX279133 光猫数据展示卡片
 # 功能：自动化数据采集与监控
 # 作者：https://github.com/Rabbit-Spec
-# 版本：1.1.6
+# 版本：1.1.7
 # 日期：2026.03.05
 # ==========================================
 
@@ -34,10 +34,8 @@ cards:
               content: "光猫仪表盘"; 
               font-size: 32px !important; 
               font-weight: 900 !important;
-              /* 👇 核心修改：将字体颜色改为高级深灰色 */
               color: #2c2c2e !important; 
               letter-spacing: 6px !important;
-              /* 👇 核心修改：将黑色阴影改为白色的高光背景圈，托起深色字体 */
               text-shadow: 0px 1px 8px rgba(255,255,255,0.9), 0px 0px 4px rgba(255,255,255,1);
               display: block;
             }
@@ -52,10 +50,9 @@ cards:
           style: |
             :host { font-size: 0px !important; }
             :host::before {
-              content: "G100P-17N3" !important;
+              content: "G100P-17N3（可自行修改型号)" !important;
               font-size: 19px !important;
               font-weight: 600 !important;
-              /* 👇 字体改为深灰色 */
               color: #3a3a3c !important; 
               letter-spacing: 2px !important;
               text-shadow: 0px 1px 5px rgba(255,255,255,0.9);

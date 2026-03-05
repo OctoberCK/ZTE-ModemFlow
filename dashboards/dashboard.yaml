@@ -24,7 +24,7 @@ cards:
         entity: sensor.zte_modem_info
         style:
           left: 13px
-          top: 63px
+          top: 60px
           transform: none
           pointer-events: none
         card_mod:
@@ -45,7 +45,7 @@ cards:
         entity: sensor.zte_modem_info
         style:
           left: 17px
-          top: 120px
+          top: 110px
           transform: none
           pointer-events: none
         card_mod:

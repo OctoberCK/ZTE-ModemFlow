@@ -6,8 +6,7 @@
 # 日期：2026.03.05
 # ==========================================
 
-# 取消全局 set -e，改用精准的按步捕获，这样能确保错误日志精准输出
-# set -e 
+set -e 
 
 # --- 颜色定义 ---
 GREEN='\033[0;32m'
@@ -40,32 +39,29 @@ success "目录结构检查/创建通过。"
 
 # 2. 下载指定文件
 log "正在下载核心脚本: zte_monitor.sh..."
-curl -sSL --connect-timeout 10 --max-time 20 --retry 3 -o /config/shell/zte_monitor.sh "${RAW_URL}/scripts/zte_monitor.sh" || {
-    error "下载 zte_monitor.sh 失败！请检查网络连接。"
+curl -sSL --connect-timeout 10 --retry 3 -o /config/shell/zte_monitor.sh "${RAW_URL}/scripts/zte_monitor.sh" || {
+    error "下载 zte_monitor.sh 失败！请检查网络连接，或确认 GitHub 上的文件路径是否正确。"
     exit 1
 }
 
 log "正在下载配置文件: zte_modemflow.yaml..."
-curl -sSL --connect-timeout 10 --max-time 20 --retry 3 -o /config/packages/zte_modemflow.yaml "${RAW_URL}/packages/zte_modemflow.yaml" || {
+curl -sSL --connect-timeout 10 --retry 3 -o /config/packages/zte_modemflow.yaml "${RAW_URL}/packages/zte_modemflow.yaml" || {
     error "下载 zte_modemflow.yaml 失败！请检查网络状态。"
     exit 1
 }
 
 log "正在下载主题文件: mushroom-glass.yaml..."
-curl -sSL --connect-timeout 10 --max-time 20 --retry 3 -o /config/themes/mushroom-glass.yaml "${RAW_URL}/themes/mushroom-glass.yaml" || {
-    error "下载 mushroom-glass.yaml 失败！"
+curl -sSL --connect-timeout 10 --retry 3 -o /config/themes/mushroom-glass.yaml "${RAW_URL}/themes/mushroom-glass.yaml" || {
+    error "下载 mushroom-glass.yaml 失败！可能是 GitHub 访问受限，请稍后重试。"
     exit 1
 }
 
-log "正在下载背景图片资源 (图片较大，允许最多等待 45 秒)..."
-curl -sSL --connect-timeout 10 --max-time 45 --retry 3 -o /config/www/img/zte_modem.jpg "${RAW_URL}/IMG/zte_modem.jpg" || {
-    error "下载 zte_modem.jpg 失败！请确认仓库路径大小写或网络是否受限。"
+log "正在下载背景文件: zte_modem.jpg..."
+curl -sSL --connect-timeout 15 --retry 3 -o /config/www/img/zte_modem.jpg "${RAW_URL}/IMG/zte_modem.jpg" || {
+    error "下载 zte_modem.jpg 失败！请确认仓库中是否存在 IMG/zte_modem.jpg (注意大小写)。"
     exit 1
 }
-curl -sSL --connect-timeout 10 --max-time 45 --retry 3 -o /config/www/img/ZTE-ModemFlow.png "${RAW_URL}/IMG/ZTE-ModemFlow.png" || {
-    error "下载 ZTE-ModemFlow.png 失败！"
-    exit 1
-}
+
 success "所有在线资源下载成功！"
 
 # 3. 设置权限
@@ -121,7 +117,7 @@ echo -e "${GREEN}======================================================${NC}"
 echo -e "             🎉 ${YELLOW}ZTE-ModemFlow 部署成功！${NC}"
 echo -e ""
 echo -e "        🧑‍💻 作者: ${BLUE}https://github.com/Rabbit-Spec${NC}"
-echo -e "        🏷️ 版本: ${BLUE}v1.1.2${NC}"
+echo -e "        🏷️ 版本: ${BLUE}v1.1.3${NC}"
 echo -e "${GREEN}======================================================${NC}"
 echo -e "${YELLOW}📌 后续操作指南：${NC}\n"
 

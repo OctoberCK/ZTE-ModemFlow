@@ -8,27 +8,61 @@
 
 type: vertical-stack
 cards:
-  - type: custom:mushroom-title-card
-    title: 光猫仪表盘（可自行修改标题）
-    subtitle: G100P-17N3（可自行修改为你设备的型号）
+  - type: picture-elements
+    image: /local/img/zte_modem.jpg?v=1
+    aspect_ratio: "21:9"
     card_mod:
       style: |
         ha-card {
-          backdrop-filter: blur(24px) saturate(120%) !important;
-          -webkit-backdrop-filter: blur(24px) saturate(120%) !important;
-          background: var(--ha-card-background) !important;
-          border: 1.5px solid var(--ha-card-border-color) !important;
           border-radius: 16px !important;
+          border: 1.5px solid var(--ha-card-border-color) !important;
+          overflow: hidden;
           box-shadow: var(--ha-card-box-shadow) !important;
-          padding-top: 16px !important;
-          padding-bottom: 16px !important;
         }
-        .subtitle {
-          color: var(--secondary-text-color) !important;
-          font-weight: 500 !important;
-        }
+    elements:
+      - type: state-label
+        entity: sun.sun
+        style:
+          left: 13px
+          top: 63px
+          transform: none
+          pointer-events: none
+        card_mod:
+          style: |
+            :host { font-size: 0px !important; }
+            :host::before {
+              content: "光猫仪表盘"; 
+              font-size: 32px !important; 
+              font-weight: 900 !important;
+              /* 👇 核心修改：将字体颜色改为高级深灰色 */
+              color: #2c2c2e !important; 
+              letter-spacing: 6px !important;
+              /* 👇 核心修改：将黑色阴影改为白色的高光背景圈，托起深色字体 */
+              text-shadow: 0px 1px 8px rgba(255,255,255,0.9), 0px 0px 4px rgba(255,255,255,1);
+              display: block;
+            }
+      - type: state-label
+        entity: sun.sun
+        style:
+          left: 17px
+          top: 120px
+          transform: none
+          pointer-events: none
+        card_mod:
+          style: |
+            :host { font-size: 0px !important; }
+            :host::before {
+              content: "G100P-17N3" !important;
+              font-size: 19px !important;
+              font-weight: 600 !important;
+              /* 👇 字体改为深灰色 */
+              color: #3a3a3c !important; 
+              letter-spacing: 2px !important;
+              text-shadow: 0px 1px 5px rgba(255,255,255,0.9);
+              display: block;
+            }
   - type: custom:mini-graph-card
-    height: 140
+    height: 147
     hours_to_show: 0.5
     points_per_hour: 30
     upper_bound: 80

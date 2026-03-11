@@ -2,8 +2,8 @@
 # 卡片：中兴 ZX279133 光猫数据展示卡片
 # 功能：自动化数据采集与监控
 # 作者：https://github.com/Rabbit-Spec
-# 版本：1.1.7
-# 日期：2026.03.05
+# 版本：1.0.6
+# 日期：2026.03.11
 # ==========================================
 
 type: vertical-stack
@@ -20,44 +20,32 @@ cards:
           box-shadow: var(--ha-card-box-shadow) !important;
         }
     elements:
-      - type: state-label
-        entity: sensor.zte_modem_info
+      - type: image
+        image: >-
+          data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'
+          width='300'
+          height='60'><style>text{font-family:system-ui,sans-serif;font-size:32px;font-weight:700;fill:%232c2c2e;letter-spacing:6px;text-shadow:0px
+          1px 8px rgba(255,255,255,0.9),0px 0px 4px
+          rgba(255,255,255,1);}</style><text x='0' y='40'>光猫仪表盘</text></svg>
         style:
           left: 13px
-          top: 60px
+          top: 40px
+          width: 300px
           transform: none
           pointer-events: none
-        card_mod:
-          style: |
-            :host { font-size: 0px !important; }
-            :host::before {
-              content: "光猫仪表盘"; 
-              font-size: 32px !important; 
-              font-weight: 900 !important;
-              color: #2c2c2e !important; 
-              letter-spacing: 6px !important;
-              text-shadow: 0px 1px 8px rgba(255,255,255,0.9), 0px 0px 4px rgba(255,255,255,1);
-              display: block;
-            }
-      - type: state-label
-        entity: sensor.zte_modem_info
+      - type: image
+        image: >-
+          data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'
+          width='200'
+          height='40'><style>text{font-family:system-ui,sans-serif;font-size:19px;font-weight:700;fill:%233a3a3c;letter-spacing:2px;text-shadow:0px
+          1px 5px rgba(255,255,255,0.9);}</style><text x='0'
+          y='25'>G100P-17N3（可以修改成你自己设备的型号）</text></svg>
         style:
           left: 17px
-          top: 110px
+          top: 90px
+          width: 200px
           transform: none
           pointer-events: none
-        card_mod:
-          style: |
-            :host { font-size: 0px !important; }
-            :host::before {
-              content: "G100P-17N3（可自行修改型号)" !important;
-              font-size: 19px !important;
-              font-weight: 600 !important;
-              color: #3a3a3c !important; 
-              letter-spacing: 2px !important;
-              text-shadow: 0px 1px 5px rgba(255,255,255,0.9);
-              display: block;
-            }
   - type: custom:mini-graph-card
     height: 147
     hours_to_show: 0.5

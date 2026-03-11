@@ -2,8 +2,8 @@
 # ==========================================
 # ZTE-ModemFlow 一键部署脚本
 # 作者：https://github.com/Rabbit-Spec
-# 版本：1.1.4
-# 日期：2026.03.05
+# 版本：1.1.5
+# 日期：2026.03.11
 # ==========================================
 
 set -e 
@@ -44,6 +44,12 @@ curl -sSL --connect-timeout 10 --retry 3 -o /config/shell/zte_monitor.sh "${RAW_
     exit 1
 }
 
+log "正在下载重启脚本: reboot_modem.sh..."
+curl -sSL --connect-timeout 10 --retry 3 -o /config/shell/reboot_modem.sh "${RAW_URL}/scripts/zte_monitor.sh" || {
+    error "下载 reboot_modem.sh 失败！请检查网络连接，或确认 GitHub 上的文件路径是否正确。"
+    exit 1
+}
+
 log "正在下载配置文件: zte_modemflow.yaml..."
 curl -sSL --connect-timeout 10 --retry 3 -o /config/packages/zte_modemflow.yaml "${RAW_URL}/packages/zte_modemflow.yaml" || {
     error "下载 zte_modemflow.yaml 失败！请检查网络状态。"
@@ -65,12 +71,19 @@ curl -sSL --connect-timeout 15 --retry 3 -o /config/www/img/zte_modem.jpg "${RAW
 success "所有在线资源下载成功！"
 
 # 3. 设置权限
-log "正在配置脚本执行权限..."
+log "正在配置核心脚本执行权限..."
 chmod +x /config/shell/zte_monitor.sh || {
     error "赋予 zte_monitor.sh 执行权限失败！当前用户可能没有操作该文件的权限。"
     exit 1
 }
-success "核心脚本权限配置完成。"
+
+log "正在配置重启脚本执行权限..."
+chmod +x /config/shell/reboot_modem.sh || {
+    error "赋予 reboot_modem.sh 执行权限失败！当前用户可能没有操作该文件的权限。"
+    exit 1
+}
+
+success "脚本权限配置完成。"
 
 # 4. HACS 环境检查 (非致命错误，只发警告不退出)
 log "正在检查 HACS 环境..."
